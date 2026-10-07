@@ -1,53 +1,78 @@
 package com.imsupehh.kavach.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+// Citizen Color Scheme (Red Urgent & Dark Surface)
+private val CitizenDarkColorScheme = darkColorScheme(
+    primary = KavachRedPrimary,
+    onPrimary = Color.White,
+    primaryContainer = KavachRedDark,
+    onPrimaryContainer = Color.White,
+    secondary = KavachRedGlow,
+    onSecondary = Color.White,
+    background = DarkBackground,
+    onBackground = TextWhitePrimary,
+    surface = DarkSurface,
+    onSurface = TextWhitePrimary,
+    surfaceVariant = DarkCard,
+    onSurfaceVariant = TextWhiteSecondary,
+    outline = DarkBorder,
+    error = KavachRedPrimary,
+    onError = Color.White
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+private val CitizenLightColorScheme = lightColorScheme(
+    primary = KavachRedPrimary,
     onPrimary = Color.White,
+    primaryContainer = KavachRedLight,
+    onPrimaryContainer = KavachRedDark,
+    secondary = KavachRedGlow,
     onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    background = LightBackground,
+    onBackground = TextDarkPrimary,
+    surface = LightSurface,
+    onSurface = TextDarkPrimary,
+    surfaceVariant = LightCard,
+    onSurfaceVariant = TextDarkSecondary,
+    outline = LightBorder,
+    error = KavachRedPrimary,
+    onError = Color.White
+)
+
+// Authority Color Scheme (Tactical Navy & Official Blue)
+private val AuthorityColorScheme = darkColorScheme(
+    primary = AuthorityBluePrimary,
+    onPrimary = Color.White,
+    primaryContainer = AuthorityBlueDark,
+    onPrimaryContainer = Color.White,
+    secondary = AuthorityBlueAccent,
+    onSecondary = Color.Black,
+    background = AuthorityNavyBackground,
+    onBackground = TextWhitePrimary,
+    surface = AuthorityNavySurface,
+    onSurface = TextWhitePrimary,
+    surfaceVariant = AuthorityNavyCard,
+    onSurfaceVariant = TextWhiteSecondary,
+    outline = DarkBorder,
+    error = SeverityHigh,
+    onError = Color.White
 )
 
 @Composable
 fun KaVachTheme(
+    isAuthorityTheme: Boolean = false,
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        isAuthorityTheme -> AuthorityColorScheme
+        darkTheme -> CitizenDarkColorScheme
+        else -> CitizenLightColorScheme
     }
 
     MaterialTheme(
